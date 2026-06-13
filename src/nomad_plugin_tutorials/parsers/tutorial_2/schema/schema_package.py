@@ -73,31 +73,8 @@ class OpticalMicroscopy(Measurement, EntryData):
             logger (BoundLogger): A structlog logger.
         """
         measurement = OpticalMicroscopy()
-        if datetime := data_dict.get('datetime'):
-            measurement.datetime = datetime
-        if (
-            'sample' in data_dict
-            and isinstance(data_dict['sample'], dict)
-            and 'sample_ID' in data_dict['sample']
-        ):
-            measurement.m_setdefault('samples/0')
-            measurement.samples[0].lab_id = data_dict['sample']['sample_ID']
-            if 'description' in data_dict['sample']:
-                measurement.description = data_dict['sample']['description']
 
-        measurement.m_setdefault('settings')
-        if resolution := data_dict.get('resolution'):
-            measurement.settings.resolution = [float(x) for x in resolution.split('x')]
-        if magnification := data_dict.get('magnification'):
-            measurement.settings.magnification = float(magnification[:-1])
-
-        measurement.m_setdefault('results/0')
-        if image_file_name := data_dict.get('imageFileName'):
-            measurement.results[0].image = os.path.join(
-                os.path.dirname(self.data_file), image_file_name
-            )
-
-        merge_sections(self, measurement, logger=logger)
+        ## Step 2: implement the writing logic
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         """
@@ -109,10 +86,8 @@ class OpticalMicroscopy(Measurement, EntryData):
         super().normalize(archive, logger)
 
         data_dict = {}
-        if self.data_file is not None:
-            data_dict = read_data_file(self.data_file, archive, logger)
-        if data_dict:
-            self.write_data(data_dict, logger)
+        ## Step 1: read the metadata into data_dict and use it to populate the quantities of the schema
+        raise NotImplementedError
 
 
 m_package.__init_metainfo__()
