@@ -35,9 +35,6 @@ m_package = SchemaPackage()
 class BlackbodyResults(ArchiveSection):
     """
     Results of the Planck spectral radiance calculation.
-
-    Stores the wavelength array, spectral radiance B(λ,T), and the peak
-    wavelength from Wien's displacement law.
     """
 
     temperature = Quantity(
