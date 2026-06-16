@@ -74,7 +74,13 @@ class OpticalMicroscopy(Measurement, EntryData):
         """
         measurement = OpticalMicroscopy()
 
-        ## Step 2: implement the writing logic
+        ## Tutorial 2.3 and 2.4 ##
+        # Implement the writing logic
+        # First populate `measurement` with the data from the `data_dict`
+        # and then merge it into the entry archive
+        # Hints:
+        # - Significant part of the code from the tutorial 1 parser can be reused here
+        # - Use the `merge_sections` utility function from `utils.py`
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         """
@@ -86,7 +92,13 @@ class OpticalMicroscopy(Measurement, EntryData):
         super().normalize(archive, logger)
 
         data_dict = {}
-        ## Step 1: read the metadata into data_dict and use it to populate the quantities of the schema
+        ## Tutorial 2.2 ##
+        # Read the metadata into data_dict and use it to populate the quantities
+        # of the schema
+        # Hints:
+        # - Use the `read_data_file` utility function from `reader.py`
+        # - Note that the process should only start if `data_file` has been added
+        # to the ELN. By default, not populated quantities are set to `None`
         raise NotImplementedError
 
 
