@@ -1,0 +1,12 @@
+{
+  "resolution": "500x500",
+  "magnification": "5x",
+  "sample": {
+    "sample_ID": "Sample_001",
+    "description": "Spin-coated slide after annealing."
+  },
+  "deviceName": "Microscope XYZ",
+  "datetime": "2025-06-01T12:00:00",
+  "imageFileName": "image.jpeg",
+  "@type": "microscopy"
+}
