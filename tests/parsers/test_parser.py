@@ -3,6 +3,7 @@ import pytest
 
 from nomad.client import parse
 
+
 @pytest.mark.skip('Skipping test in `tutorial-mode` branch.')
 def test_parse_file():
     archive = parse('tests/data/parsers/metadata.xml')[0]

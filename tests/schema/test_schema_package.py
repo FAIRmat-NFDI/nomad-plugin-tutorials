@@ -4,6 +4,7 @@ import pytest
 
 from nomad.client import normalize_all, parse
 
+
 @pytest.mark.skip('Skipping test in `tutorial-mode` branch.')
 def test_schema_package():
     test_file = os.path.join('tests', 'data', 'schema', 'test.archive.yaml')
