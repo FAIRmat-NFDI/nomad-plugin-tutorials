@@ -48,20 +48,14 @@ class BlackbodyResults(ArchiveSection):
         unit='nm',
         description='Wavelength array in nm.',
     )
-    spectral_radiance = Quantity(
-        type=float,
-        shape=['*'],
-        unit='W sr⁻¹ m⁻³',
-        description='Spectral radiance B(λ,T) in W·sr⁻¹·m⁻³ at each wavelength.',
-    )
-    peak_wavelength = Quantity(
-        type=float,
-        unit='nm',
-        description=(
-            "Wavelength of maximum emission in nm, from Wien's displacement law: "
-            'λ_max = b / T,  b = 2.898 × 10⁻³ m·K.'
-        ),
-    )
+
+    ## Tutorial 1.1 ##
+    # Add the quantities `spectral_radiance` and `peak_wavelength` with suitable type,
+    # shape, unit, and description.
+    # Hints:
+    #
+    # - `spectral_radiance` should be an array of type `float` with units 'W sr⁻¹ m⁻³'.
+    # - `peak_wavelength` should be a scalar of type `float` with units 'nm'.
 
 
 class BlackbodyResultsPlot(BlackbodyResults, PlotSection):
@@ -80,24 +74,19 @@ class BlackbodyResultsPlot(BlackbodyResults, PlotSection):
         """
         super().normalize(archive, logger)
 
-        if self.wavelength is None or self.spectral_radiance is None:
-            return
+        ## Tutorial 1.2 ##
+        # Configure the `normalize`` method to generate the Plotly plot.
+        #
+        # Hints:
+        # - Verify that `wavelength` and `spectral_radiance` are not None.
+        # - Import the helper plotting function plot_blackbody_spectrum from the
+        #   visualization module: nomad_plugin_tutorials.schema.visualize.
+        # - Generate a plotly figure using the plotting function
+        # - Instantiate a `PlotlyFigure` section and set `PlotlyFigure.figure` to
+        #   the JSON-serialized figure (use `plotly_figure.to_plotly_json()`). Also
+        #   set the `PlotlyFigure.label`
+        # - Wrap the `PlotlyFigure` object in a list and assign it to `self.figures`
 
-        from nomad_plugin_tutorials.schema.visualize import (
-            plot_blackbody_spectrum,
-        )
-
-        self.figures = [
-            PlotlyFigure(
-                label='Spectral Radiance',
-                figure=plot_blackbody_spectrum(
-                    temperature=self.temperature.to('K').magnitude,
-                    wavelength=self.wavelength.to('nm').magnitude,
-                    spectral_radiance=self.spectral_radiance.to('W sr⁻¹ m⁻³').magnitude,
-                    peak_wavelength=self.peak_wavelength.to('nm').magnitude,
-                ).to_plotly_json(),
-            )
-        ]
 
 
 class BlackbodyRadiation(Activity, EntryData):
@@ -127,24 +116,18 @@ class BlackbodyRadiation(Activity, EntryData):
         ),
         a_eln=ELNAnnotation(component=ELNComponentEnum.NumberEditQuantity),
     )
-    wavelength_min = Quantity(
-        type=float,
-        unit='nm',
-        description='Lower bound of the wavelength range in nm. Defaults to 100 nm.',
-        default=100.0,
-        a_eln=ELNAnnotation(component=ELNComponentEnum.NumberEditQuantity),
-    )
-    wavelength_max = Quantity(
-        type=float,
-        unit='nm',
-        description='Upper bound of the wavelength range in nm. Defaults to 3000 nm.',
-        default=3000.0,
-        a_eln=ELNAnnotation(component=ELNComponentEnum.NumberEditQuantity),
-    )
-    results = SubSection(
-        section_def=BlackbodyResultsPlot,
-        description='Computed spectral radiance profile and derived quantities.',
-    )
+
+    ## Tutorial 1.3 ##
+    # Add the definition for quantities `wavelength_min` and `wavelength_max` along with
+    # ELN annotations.
+    # Also define the `results` sub-section.
+    #
+    # Hints:
+    # - `wavelength_min` and `wavelength_max` should be of scalars of type `float` with
+    #   units `nm`. You can also set the `Quantity.default` to 100.0 and 3000.0
+    #   respectively. For both, you can use the `NumberEditQuantity` for ELN component.
+    # - Use `SubSection` class to define `results` sub-section by setting its
+    #   `SubSection.section_def` to the `BlackbodyResultsPlot`.
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         """
@@ -158,18 +141,24 @@ class BlackbodyRadiation(Activity, EntryData):
         )
 
         if self.temperature:
-            ps = planck_spectrum(
-                temperature=self.temperature.to('K').magnitude,
-                wavelength_min=self.wavelength_min.to('nm').magnitude,
-                wavelength_max=self.wavelength_max.to('nm').magnitude,
-            )
 
-            results = BlackbodyResultsPlot(
-                temperature=self.temperature,
-                wavelength=ps['wavelength'],
-                spectral_radiance=ps['spectral_radiance'],
-                peak_wavelength=ps['peak_wavelength'],
-            )
+            ## Tutorial 1.4 ##
+            # Run the Planck spectrum calculation using the `plack_spectrum` helper
+            # function. Then populate the `results` using the output.
+            #
+            # Hints:
+            # - When using the quantity values in the helper function, use only
+            #   their magnitude. For example,
+            #       ps = planck_spectrum(
+            #           temperature=self.temperature.to('K').magnitude,
+            #           ...
+            #       )
+            # - Instantiate and populate the `BlackbodyResultsPlot` section for
+            #   `results` using the computed spectrum.
+
+            ps = None
+            results = None
+
             results.normalize(archive, logger)
             self.results = results
         else:
