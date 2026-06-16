@@ -2,7 +2,8 @@
 
 This repo contains tutorials for learning how to develop NOMAD plugin entry
 points. We recommend using it in conjunction with the
-[Tutorial documentation on plugin development](https://fairmat-nfdi.github.io/nomad-docs/tutorial/develop_plugin).
+[Tutorial documentation on plugin development](https://fairmat-nfdi.github.io/nomad-docs/pr-preview/pr-294/tutorial/develop_plugin/plugin_structure.html
+).
 
 ## Getting Started
 
