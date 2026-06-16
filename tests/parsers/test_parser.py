@@ -1,6 +1,6 @@
 import math
-import pytest
 
+import pytest
 from nomad.client import parse
 
 
