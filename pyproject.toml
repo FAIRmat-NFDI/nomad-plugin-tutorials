@@ -25,7 +25,13 @@ authors = [
 ]
 maintainers = [{ name = "FAIRmat", email = "fairmat@physik.hu-berlin.de" }]
 license = { file = "LICENSE" }
-dependencies = ["nomad-lab>=1.4.2", "numpy", "plotly"]
+dependencies = [
+    "ipykernel>=7.3.0",
+    "nbformat>=5.10.4",
+    "nomad-lab>=1.4.2",
+    "numpy",
+    "plotly",
+]
 
 [project.urls]
 Repository = "https://github.com/FAIRmat-NFDI/nomad-plugin-tutorial"
