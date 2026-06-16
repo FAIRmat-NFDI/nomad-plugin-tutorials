@@ -34,16 +34,15 @@ class OpticalMicroscopyParser(MatchingParser):
             if 'description' in data_dict['sample']:
                 measurement.description = data_dict['sample']['description']
 
-        measurement.m_setdefault('settings')
-        if resolution := data_dict.get('resolution'):
-            measurement.settings.resolution = [float(x) for x in resolution.split('x')]
-        if magnification := data_dict.get('magnification'):
-            measurement.settings.magnification = float(magnification[:-1])
+        ## Tutorial 1.1 ##
+        # Populate `measurement.settings` and `measurement.results` section using the
+        # parsed data dictionary and assign it to archive.data.
+        #
+        # Hints:
+        # - Use `measurement.m_setdefault` method to instantiate `settings` and
+        #   `results` sections. Remember `results` is a list of sub-sections.
+        #   Instantiate it with `results/0` to append the first list element.
+        # - When setting the `measurement.results[0].image` path, join the image path
+        #   from the data_dict with the directory name of the `data_file_path`
+        # - Assign `measurement` to `archive.data`
 
-        measurement.m_setdefault('results/0')
-        if image_file_name := data_dict.get('imageFileName'):
-            measurement.results[0].image = os.path.join(
-                os.path.dirname(data_file_path), image_file_name
-            )
-
-        archive.data = measurement
