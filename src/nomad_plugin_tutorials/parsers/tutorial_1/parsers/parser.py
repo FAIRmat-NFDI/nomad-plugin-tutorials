@@ -45,4 +45,3 @@ class OpticalMicroscopyParser(MatchingParser):
         # - When setting the `measurement.results[0].image` path, join the image path
         #   from the data_dict with the directory name of the `data_file_path`
         # - Assign `measurement` to `archive.data`
-

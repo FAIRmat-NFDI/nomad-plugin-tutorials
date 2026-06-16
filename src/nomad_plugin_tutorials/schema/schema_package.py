@@ -88,7 +88,6 @@ class BlackbodyResultsPlot(BlackbodyResults, PlotSection):
         # - Wrap the `PlotlyFigure` object in a list and assign it to `self.figures`
 
 
-
 class BlackbodyRadiation(Activity, EntryData):
     """
     ELN schema for a Planck blackbody radiation calculation.
@@ -141,7 +140,6 @@ class BlackbodyRadiation(Activity, EntryData):
         )
 
         if self.temperature:
-
             ## Tutorial 1.4 ##
             # Run the Planck spectrum calculation using the `plack_spectrum` helper
             # function. Then populate the `results` using the output.
